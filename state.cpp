@@ -110,7 +110,7 @@ char inst::get_dir()
 {
     return dir;
 }
-i
+
 /*
  * Getter for destination
  */
