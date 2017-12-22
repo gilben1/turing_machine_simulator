@@ -1,0 +1,7 @@
+# Determines if the given string is of the form 0^n 1^n
+# E.g: 0011 Accepts, 0001 Rejects
+0;0AR1;BBR3;
+1;00R1;BBR1;1BL2;
+2;BBL2;00L2;AAR0;
+3;BBR3;__R4;
+L

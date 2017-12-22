@@ -1,0 +1,7 @@
+# Evaluates a string consisting of only 'a' characters
+# Counts, in binary, the number of 'a' characters, and halts
+# E.g: aaaaaa -> 110aaaaaa
+0;aXL1;XaR0;00R0;11R0;__L3;
+1;aaL1;10L1;_1R2;01R2;
+2;00R2;aaR2;XXL0;
+R
