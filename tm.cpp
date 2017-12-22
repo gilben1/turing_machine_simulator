@@ -130,11 +130,11 @@ int turing_machine::process_tape()
     while (true)
     {
         inst * i = current_state.process(read());
+        display_tape();
         if (!i)
             return 0;
         else
         {
-            display_tape();
             write(i->get_set());
             if (i->get_dir() == 'R')
             {
