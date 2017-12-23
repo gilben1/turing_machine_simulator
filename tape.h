@@ -12,6 +12,8 @@
 #include<iostream>
 #include<vector>
 #include<cstring>
+#include<string>
+#include<sstream>
 
 using namespace std;
 
