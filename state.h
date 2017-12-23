@@ -20,7 +20,7 @@ class inst
         inst(const inst & src);
         inst(char co, char se, char di, int de);
         bool compare(char comp);
-        void display();
+        string display();
         char get_set();
         char get_dir();
         int get_dest();
@@ -43,7 +43,7 @@ class state
         state(const state & src);
         inst * process(char cur);
         void add_transition(inst & src);
-        void display();
+        vector<string> display();
 
     protected:
         int id;
