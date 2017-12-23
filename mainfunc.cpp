@@ -96,15 +96,20 @@ void print_string_vector(WINDOW *current_win, vector<string> & output)
 {
     int x = 2;
     int y = 2;
+
+    wclear(current_win);
     box(current_win, 0, 0);
+
     int size = output.size();
     for (int i = 0; i < size; ++i)
     {
         mvwprintw(current_win, y, x, "%s", output[i].c_str());
         ++y;
     }
+    box(current_win, 0, 0);
     wrefresh(current_win);
 }
+
 string user_get(WINDOW *current_win, int & line, const string prompt)
 {
     char input[1000];
@@ -121,6 +126,6 @@ string user_get(WINDOW *current_win, int & line, const string prompt)
     wgetstr(current_win, input);
     line++;
     mvwprintw(current_win, line++, 2, "%s %s", "You entered: ", input);
-    wgetch(current_win);
+    noecho();
     return string(input);
 }
