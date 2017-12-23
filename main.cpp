@@ -107,9 +107,12 @@ int main()
         switch(choice)
         {
             case 1:
+            {
                 load_machine(tm, menu_win);
-                tm.display_states();
+                vector<string> output = tm.display_states();
+                print_string_vector(menu_win, output);
                 break;
+            }
             case 2:
                 tm.display_states();
                 break;
