@@ -18,11 +18,11 @@ class turing_machine : public tape
         ~turing_machine();
         void add_state(state & src);
         void read_from_file(string filename);
-        void display_states();
+        vector<string> display_states();
         void build_tape(const string input);
         int process_tape();
     protected:
         vector<state> states;
         state current_state;
-        string desc;
+        vector<string> desc;
 };

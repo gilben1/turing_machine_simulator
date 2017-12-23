@@ -51,8 +51,7 @@ void turing_machine::read_from_file(string filename)
             if (handle[0] == '#') // Processing description
             {
                 handle.erase(0, 1);
-                desc += handle;
-                desc += "\n";
+                desc.push_back(handle);
                 getline(fin, handle);
             }
             else if (handle[1] != ';') // If we're processing the start pos
@@ -92,13 +91,21 @@ void turing_machine::read_from_file(string filename)
 /*
  * Display the states of the machine
  */
-void turing_machine::display_states()
+vector<string> turing_machine::display_states()
 {
-    cout << desc << "\n";
+    vector<string> ret;
+    for (int i = 0; i < desc.size(); ++i)
+        ret.push_back(desc[i]);
+
     for (int i = 0; i < states.size(); ++i)
     {
-        states[i].display();
+        vector<string> state_out = states[i].display();
+        for (int j = 0; j < state_out.size(); ++j)
+        {
+            ret.push_back(state_out[j]);
+        }
     }
+    return ret;
 }
 
 /*
