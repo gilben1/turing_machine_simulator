@@ -16,6 +16,7 @@ const int HEIGHT = 40;
 
 int main()
 {
+    turing_machine tm;
     int startx = 0;
     int starty = 0;
 
@@ -100,18 +101,45 @@ int main()
         if (choice != 0)
             break;
         }
-    mvprintw(23, 0, "You chose choice %d with choice string %s\n", choice, choices[choice - 1].c_str());
 
+        mvprintw(starty + HEIGHT, 0, "You chose choice %d with choice string %s\n", choice, choices[choice - 1].c_str());
 
-
-
+        switch(choice)
+        {
+            case 1:
+                load_machine(tm, menu_win);
+                tm.display_states();
+                break;
+            case 2:
+                tm.display_states();
+                break;
+            case 3:
+                build_tape(tm);
+                tm.display_tape();
+                break;
+            case 4:
+                tm.display_tape();
+                break;
+            case 5:
+                select_start(tm);
+                tm.display_tape();
+                break;
+            case 6:
+                if (tm.process_tape())
+                    cout << "Halt and accept\n";
+                else
+                    cout << "Halt and reject\n";
+                break;
+            default:
+                cout << "See ya\n";
+                break;
+        }
 
     clrtoeol();
     refresh();
     c = wgetch(menu_win);
     endwin();
-
-    turing_machine tm;
+/*
     cout << "Welcome to the near useless turing machine simulator!\n";
     int resp = 0;
     // Menu loop
@@ -158,7 +186,6 @@ int main()
                 break;
         }
     }
-    while (resp > 0 && resp < 7);
-
+    while (resp > 0 && resp < 7);*/
     return 1;
 }

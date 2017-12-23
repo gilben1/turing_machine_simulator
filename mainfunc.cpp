@@ -14,12 +14,11 @@
 /*
  * Loads machine from file based on user input
  */
-void load_machine(turing_machine & tm)
+void load_machine(turing_machine & tm, WINDOW * current_win)
 {
-    cout << "Enter the name of the file you'd like to load:\n";
-    char input[1000];
-    cin.get(input, 1000, '\n');
-    cin.ignore(1000, '\n');
+    int line = 2;
+
+    string input = user_get(current_win, line, "Enter the name of the file you'd like to load");
 
     tm.read_from_file(input);
 }
@@ -105,4 +104,23 @@ void print_string_vector(WINDOW *current_win, vector<string> & output)
         ++y;
     }
     wrefresh(current_win);
+}
+string user_get(WINDOW *current_win, int & line, const string prompt)
+{
+    char input[1000];
+    wclear(current_win);
+    box(current_win, 0, 0);
+
+    mvwprintw(current_win, line++, 2, "%s", prompt.c_str());
+    wrefresh(current_win);
+
+    wmove(current_win, line, 2);
+    refresh();
+    wrefresh(current_win);
+    echo();
+    wgetstr(current_win, input);
+    line++;
+    mvwprintw(current_win, line++, 2, "%s %s", "You entered: ", input);
+    wgetch(current_win);
+    return string(input);
 }
