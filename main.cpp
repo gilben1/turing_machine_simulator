@@ -11,22 +11,30 @@
  */
 #include "main.h"
 
-const int WIDTH = 30;
-const int HEIGHT = 10;
+const int WIDTH = 100;
+const int HEIGHT = 40;
 
 int main()
 {
     int startx = 0;
     int starty = 0;
 
-    char * choices[] = {
+    /*char * choices[] = {
         "Choice 1",
         "Choice 2",
         "Choice 3",
         "Choice 4",
         "Exit",
-    };
-    int n_choices = sizeof(choices) / sizeof(char *);
+    };*/
+    vector<string> choices;
+    choices.push_back("Load a machine from file");
+    choices.push_back("Display states of the machine");
+    choices.push_back("Build the infinite tape");
+    choices.push_back("Display the current tape");
+    choices.push_back("Select the start position of the tapehead");
+    choices.push_back("Process the input");
+    choices.push_back("Exit");
+    //int n_choices = sizeof(choices) / sizeof(char *);
 
     WINDOW *menu_win;
     int highlight = 1;
@@ -37,14 +45,14 @@ int main()
     clear();
     noecho();
     cbreak();
-    startx = (80 - WIDTH) / 2;
-    starty = (24 - HEIGHT) / 2;
+    startx = (COLS - WIDTH) / 2;
+    starty = (LINES - HEIGHT) / 2;
 
     menu_win = newwin(HEIGHT, WIDTH, starty, startx);
     keypad(menu_win, TRUE);
     mvprintw(0, 0, "Use arrow keys to go up and down, Press enter to select a choice");
     refresh();
-
+/*
     vector<string> output;
 
     output.push_back("Hi,");
@@ -57,9 +65,12 @@ int main()
     output.push_back("...what?");
 
     print_string_vector(menu_win, output);
+    clrtoeol();
+    refresh();
+*/
 
-    /*
-    print_menu(menu_win, highlight, choices, n_choices);
+
+    print_menu(menu_win, highlight, choices);
     while (1)
     {
         c = wgetch(menu_win);
@@ -67,12 +78,12 @@ int main()
         {
             case KEY_UP:
                 if (highlight == 1)
-                    highlight == n_choices;
+                    highlight == choices.size();
                 else
                     --highlight;
                 break;
             case KEY_DOWN:
-                if (highlight == n_choices)
+                if (highlight == choices.size())
                     highlight = 1;
                 else
                     ++highlight;
@@ -85,14 +96,17 @@ int main()
                 refresh();
                 break;
         }
-        print_menu(menu_win, highlight, choices, n_choices);
+        print_menu(menu_win, highlight, choices);
         if (choice != 0)
             break;
         }
-    mvprintw(23, 0, "You chose choice %d with choice string %s\n", choice, choices[choice - 1]);
+    mvprintw(23, 0, "You chose choice %d with choice string %s\n", choice, choices[choice - 1].c_str());
+
+
+
+
 
     clrtoeol();
-    */
     refresh();
     c = wgetch(menu_win);
     endwin();

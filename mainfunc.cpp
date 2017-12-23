@@ -71,28 +71,29 @@ void select_start(turing_machine & tm)
     }
 }
 
-void print_menu(WINDOW *menu_win, int highlight, char *choices[], int n_choices)
+void print_menu(WINDOW *menu_win, int highlight, vector<string> & choices)
 {
     int x, y, i;
 
     x = 2;
     y = 2;
     box(menu_win, 0, 0);
-    for(i = 0; i < n_choices; ++i)
+    int size = choices.size();
+    for(i = 0; i < size; ++i)
     {   if(highlight == i + 1) /* High light the present choice */
         {   wattron(menu_win, A_REVERSE); 
-            mvwprintw(menu_win, y, x, "%s", choices[i]);
+            mvwprintw(menu_win, y, x, "%s", choices[i].c_str());
             wattroff(menu_win, A_REVERSE);
         }
         else
-            mvwprintw(menu_win, y, x, "%s", choices[i]);
+            mvwprintw(menu_win, y, x, "%s", choices[i].c_str());
         ++y;
     }
     wrefresh(menu_win);
 }
 
 
-void print_string_vector(WINDOW *current_win, vector<string> output)
+void print_string_vector(WINDOW *current_win, vector<string> & output)
 {
     int x = 2;
     int y = 2;
