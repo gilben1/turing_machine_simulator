@@ -11,8 +11,86 @@
  */
 #include "main.h"
 
+const int WIDTH = 30;
+const int HEIGHT = 10;
+
 int main()
 {
+    int startx = 0;
+    int starty = 0;
+
+    char * choices[] = {
+        "Choice 1",
+        "Choice 2",
+        "Choice 3",
+        "Choice 4",
+        "Exit",
+    };
+    int n_choices = sizeof(choices) / sizeof(char *);
+
+    WINDOW *menu_win;
+    int highlight = 1;
+    int choice = 0;
+    int c;
+
+    initscr();
+    clear();
+    noecho();
+    cbreak();
+    startx = (80 - WIDTH) / 2;
+    starty = (24 - HEIGHT) / 2;
+
+    menu_win = newwin(HEIGHT, WIDTH, starty, startx);
+    keypad(menu_win, TRUE);
+    mvprintw(0, 0, "Use arrow keys to go up and down, Press enter to select a choice");
+    refresh();
+    print_menu(menu_win, highlight, choices, n_choices);
+    while (1)
+    {
+        c = wgetch(menu_win);
+        switch(c)
+        {
+            case KEY_UP:
+                if (highlight == 1)
+                    highlight == n_choices;
+                else
+                    --highlight;
+                break;
+            case KEY_DOWN:
+                if (highlight == n_choices)
+                    highlight = 1;
+                else
+                    ++highlight;
+                break;
+            case 10:
+                choice = highlight;
+                break;
+            default:
+                mvprintw(24, 0, "Character pressed is = %3d Hopefully it can be printed as '%c'", c, c);
+                refresh();
+                break;
+        }
+        print_menu(menu_win, highlight, choices, n_choices);
+        if (choice != 0)
+            break;
+        }
+    mvprintw(23, 0, "You chose choice %d with choice string %s\n", choice, choices[choice - 1]);
+    clrtoeol();
+    refresh();
+    endwin();
+
+
+
+
+
+
+
+
+
+
+
+
+
     turing_machine tm;
     cout << "Welcome to the near useless turing machine simulator!\n";
     int resp = 0;

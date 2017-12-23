@@ -10,6 +10,10 @@
  * shown in steps to simulate the position of the tapehead as it processes input
  */
 #include "tm.h"
+#include <ncurses.h>
+
 void load_machine(turing_machine & tm);
 void build_tape(turing_machine & tm);
 void select_start(turing_machine & tm);
+
+void print_menu(WINDOW *menu_win, int highlight, char *choices[], int n_choices);
