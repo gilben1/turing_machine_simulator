@@ -17,3 +17,4 @@ void build_tape(turing_machine & tm);
 void select_start(turing_machine & tm);
 
 void print_menu(WINDOW *menu_win, int highlight, char *choices[], int n_choices);
+void print_string_vector(WINDOW *current_win, vector<string> output);

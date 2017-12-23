@@ -70,6 +70,7 @@ void select_start(turing_machine & tm)
             break;
     }
 }
+
 void print_menu(WINDOW *menu_win, int highlight, char *choices[], int n_choices)
 {
     int x, y, i;
@@ -88,4 +89,19 @@ void print_menu(WINDOW *menu_win, int highlight, char *choices[], int n_choices)
         ++y;
     }
     wrefresh(menu_win);
+}
+
+
+void print_string_vector(WINDOW *current_win, vector<string> output)
+{
+    int x = 2;
+    int y = 2;
+    box(current_win, 0, 0);
+    int size = output.size();
+    for (int i = 0; i < size; ++i)
+    {
+        mvwprintw(current_win, y, x, "%s", output[i].c_str());
+        ++y;
+    }
+    wrefresh(current_win);
 }

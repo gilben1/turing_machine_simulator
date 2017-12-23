@@ -44,6 +44,21 @@ int main()
     keypad(menu_win, TRUE);
     mvprintw(0, 0, "Use arrow keys to go up and down, Press enter to select a choice");
     refresh();
+
+    vector<string> output;
+
+    output.push_back("Hi,");
+    output.push_back("My");
+    output.push_back("Name");
+    output.push_back("Is");
+    output.push_back("...");
+    output.push_back("...");
+    output.push_back("...");
+    output.push_back("...what?");
+
+    print_string_vector(menu_win, output);
+
+    /*
     print_menu(menu_win, highlight, choices, n_choices);
     while (1)
     {
@@ -75,21 +90,12 @@ int main()
             break;
         }
     mvprintw(23, 0, "You chose choice %d with choice string %s\n", choice, choices[choice - 1]);
+
     clrtoeol();
+    */
     refresh();
+    c = wgetch(menu_win);
     endwin();
-
-
-
-
-
-
-
-
-
-
-
-
 
     turing_machine tm;
     cout << "Welcome to the near useless turing machine simulator!\n";
