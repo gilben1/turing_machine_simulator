@@ -20,13 +20,6 @@ int main()
     int startx = 0;
     int starty = 0;
 
-    /*char * choices[] = {
-      "Choice 1",
-      "Choice 2",
-      "Choice 3",
-      "Choice 4",
-      "Exit",
-      };*/
     vector<string> choices;
     choices.push_back("Load a machine from file");
     choices.push_back("Display states of the machine");
@@ -35,7 +28,6 @@ int main()
     choices.push_back("Select the start position of the tapehead");
     choices.push_back("Process the input");
     choices.push_back("Exit");
-    //int n_choices = sizeof(choices) / sizeof(char *);
 
     WINDOW *menu_win;
     int highlight = 1;
@@ -53,22 +45,7 @@ int main()
     keypad(menu_win, TRUE);
     mvprintw(0, 0, "Use arrow keys to go up and down, Press enter to select a choice");
     refresh();
-    /*
-       vector<string> output;
 
-       output.push_back("Hi,");
-       output.push_back("My");
-       output.push_back("Name");
-       output.push_back("Is");
-       output.push_back("...");
-       output.push_back("...");
-       output.push_back("...");
-       output.push_back("...what?");
-
-       print_string_vector(menu_win, output);
-       clrtoeol();
-       refresh();
-       */
 
     while (choice != 7)
     {
@@ -116,33 +93,46 @@ int main()
                     break;
                 }
             case 2:
-                tm.display_states();
-                choice = 0;
-                break;
+                {
+                    vector<string> output = tm.display_states();
+                    print_string_vector(menu_win, output);
+                    choice = 0;
+                    break;
+                }
             case 3:
-                build_tape(tm);
-                tm.display_tape();
-                choice = 0;
-                break;
+                {
+                    build_tape(tm);
+                    tm.display_tape();
+                    choice = 0;
+                    break;
+                }
             case 4:
-                tm.display_tape();
-                choice = 0;
-                break;
+                {
+                    tm.display_tape();
+                    choice = 0;
+                    break;
+                }
             case 5:
-                select_start(tm);
-                tm.display_tape();
-                choice = 0;
-                break;
+                {
+                    select_start(tm);
+                    tm.display_tape();
+                    choice = 0;
+                    break;
+                }
             case 6:
-                if (tm.process_tape())
-                    cout << "Halt and accept\n";
-                else
-                    cout << "Halt and reject\n";
-                choice = 0;
-                break;
+                {
+                    if (tm.process_tape())
+                        cout << "Halt and accept\n";
+                    else
+                        cout << "Halt and reject\n";
+                    choice = 0;
+                    break;
+                }
             case 7:
-                cout << "See ya\n";
-                break;
+                {
+                    cout << "See ya\n";
+                    break;
+                }
         }
 
         clrtoeol();
