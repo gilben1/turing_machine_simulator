@@ -17,8 +17,6 @@ const int HEIGHT = 40;
 int main()
 {
     turing_machine tm;
-    int startx = 0;
-    int starty = 0;
 
     vector<string> choices;
     choices.push_back("Load a machine from file");
@@ -29,7 +27,20 @@ int main()
     choices.push_back("Process the input");
     choices.push_back("Exit");
 
-    WINDOW *menu_win;
+    /*WINDOW *menu_win;
+    int menux = 0;
+    int menuy = 0;
+    int menuwidth = 0;
+    int menuheight = 0;
+
+    WINDOW *disp_win;
+    int dispx = 0;
+    int dispy = 0;
+    int dispwidth = 0;
+    int dispheight = 0;*/
+    WIN menu_win;
+    WIN disp_win;
+
     int highlight = 1;
     int choice = 0;
     int c;
@@ -38,11 +49,23 @@ int main()
     clear();
     noecho();
     cbreak();
-    startx = (COLS - WIDTH) / 2;
-    starty = (LINES - HEIGHT) / 2;
 
-    menu_win = newwin(HEIGHT, WIDTH, starty, startx);
-    keypad(menu_win, TRUE);
+    menu_win.x = 2;
+    menu_win.y = 2;
+    menu_win.width = COLS / 4;
+    menu_win.height = LINES / 4;
+
+    disp_win.x = menu_win.x + menu_win.width;
+    disp_win.y = 2;
+
+    disp_win.width = COLS / 3;
+    disp_win.height = LINES / 2;
+
+    menu_win.window = newwin(menu_win.height, menu_win.width, menu_win.y, menu_win.x);
+    keypad(menu_win.window, TRUE);
+    
+    disp_win.window = newwin(disp_win.height, disp_win.width, disp_win.y, disp_win.x);
+
     mvprintw(0, 0, "Use arrow keys to go up and down, Press enter to select a choice");
     refresh();
 
@@ -52,7 +75,7 @@ int main()
         print_menu(menu_win, highlight, choices);
         while (choice != 7)
         {
-            c = wgetch(menu_win);
+            c = wgetch(menu_win.window);
             switch(c)
             {
                 case KEY_UP:
@@ -80,22 +103,22 @@ int main()
                 break;
         }
 
-        mvprintw(starty + HEIGHT, 0, "You chose choice %d with choice string %s\n", choice, choices[choice - 1].c_str());
+        //mvprintw(menuy + HEIGHT, 0, "You chose choice %d with choice string %s\n", choice, choices[choice - 1].c_str());
 
         switch(choice)
         {
             case 1:
                 {
-                    load_machine(tm, menu_win);
+                    load_machine(tm, disp_win);
                     vector<string> output = tm.display_states();
-                    print_string_vector(menu_win, output);
+                    print_string_vector(disp_win, output);
                     choice = 0;
                     break;
                 }
             case 2:
                 {
                     vector<string> output = tm.display_states();
-                    print_string_vector(menu_win, output);
+                    print_string_vector(disp_win, output);
                     choice = 0;
                     break;
                 }
@@ -137,8 +160,8 @@ int main()
 
         clrtoeol();
         refresh();
-        c = wgetch(menu_win);
-        wclear(menu_win);
+        c = wgetch(menu_win.window);
+        wclear(menu_win.window);
     }
     endwin();
     /*

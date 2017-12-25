@@ -14,7 +14,7 @@
 /*
  * Loads machine from file based on user input
  */
-void load_machine(turing_machine & tm, WINDOW * current_win)
+void load_machine(turing_machine & tm, WIN & current_win)
 {
     int line = 2;
 
@@ -70,62 +70,69 @@ void select_start(turing_machine & tm)
     }
 }
 
-void print_menu(WINDOW *menu_win, int highlight, vector<string> & choices)
+void print_menu(WIN & menu_win, int highlight, vector<string> & choices)
 {
     int x, y, i;
 
     x = 2;
     y = 2;
-    box(menu_win, 0, 0);
+    box(menu_win.window, 0, 0);
     int size = choices.size();
     for(i = 0; i < size; ++i)
     {   if(highlight == i + 1) /* High light the present choice */
-        {   wattron(menu_win, A_REVERSE); 
-            mvwprintw(menu_win, y, x, "%s", choices[i].c_str());
-            wattroff(menu_win, A_REVERSE);
+        {   wattron(menu_win.window, A_REVERSE); 
+            mvwprintw(menu_win.window, y, x, "%s", choices[i].c_str());
+            wattroff(menu_win.window, A_REVERSE);
         }
         else
-            mvwprintw(menu_win, y, x, "%s", choices[i].c_str());
+            mvwprintw(menu_win.window, y, x, "%s", choices[i].c_str());
         ++y;
     }
-    wrefresh(menu_win);
+    wrefresh(menu_win.window);
 }
 
 
-void print_string_vector(WINDOW *current_win, vector<string> & output)
+void print_string_vector(WIN & current_win, vector<string> & output)
 {
     int x = 2;
     int y = 2;
 
-    wclear(current_win);
-    box(current_win, 0, 0);
+    wclear(current_win.window);
+    box(current_win.window, 0, 0);
 
     int size = output.size();
+
     for (int i = 0; i < size; ++i)
     {
-        mvwprintw(current_win, y, x, "%s", output[i].c_str());
+        mvwprintw(current_win.window, y, x, "%s", output[i].c_str());
         ++y;
     }
-    box(current_win, 0, 0);
-    wrefresh(current_win);
+    box(current_win.window, 0, 0);
+    wrefresh(current_win.window);
 }
 
-string user_get(WINDOW *current_win, int & line, const string prompt)
+string user_get(WIN & current_win, int & line, const string prompt)
 {
     char input[1000];
-    wclear(current_win);
-    box(current_win, 0, 0);
+    wclear(current_win.window);
+    box(current_win.window, 0, 0);
 
-    mvwprintw(current_win, line++, 2, "%s", prompt.c_str());
-    wrefresh(current_win);
+    mvwprintw(current_win.window, line++, 2, "%s", prompt.c_str());
+    wrefresh(current_win.window);
 
-    wmove(current_win, line, 2);
+    wmove(current_win.window, line, 2);
     refresh();
-    wrefresh(current_win);
+    wrefresh(current_win.window);
     echo();
-    wgetstr(current_win, input);
+    wgetstr(current_win.window, input);
     line++;
-    mvwprintw(current_win, line++, 2, "%s %s", "You entered: ", input);
+    mvwprintw(current_win.window, line++, 2, "%s %s", "You entered: ", input);
     noecho();
     return string(input);
 }
+
+WIN::WIN()
+{
+    x = y = width = height = 0;
+}
+
