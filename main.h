@@ -21,6 +21,7 @@ struct WIN
     int y;
     int width;
     int height;
+    int current_line;
 };
 void load_machine(turing_machine & tm, WIN & current_win);
 void display_states(turing_machine & tm, WIN & current_win);
@@ -31,4 +32,4 @@ void print_menu(WIN & menu_win, int highlight, vector<string> & choices);
 void print_string_vector(WIN & current_win, vector<string> & output);
 void print_string(WIN & current_win, string & output);
 
-string user_get(WIN & current_win, int & line, const string prompt);
+string user_get(WIN & current_win, const string prompt);

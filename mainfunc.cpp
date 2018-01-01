@@ -16,9 +16,10 @@
  */
 void load_machine(turing_machine & tm, WIN & current_win)
 {
-    int line = 2;
+    //int line = 2;
+    current_win.current_line = 2;
 
-    string input = user_get(current_win, line, "Enter the name of the file you'd like to load");
+    string input = user_get(current_win, "Enter the name of the file you'd like to load");
 
     string output = tm.read_from_file(input);
     if (output != "")
@@ -129,38 +130,36 @@ void print_string_vector(WIN & current_win, vector<string> & output)
 void print_string(WIN & current_win, string & output)
 {
     int x = 2;
-    int y = 2;
 
     wclear(current_win.window);
     box(current_win.window, 0, 0);
 
-    mvwprintw(current_win.window, y, x, "%s", output.c_str());
+    mvwprintw(current_win.window, current_win.current_line++, x, "%s", output.c_str());
     box(current_win.window, 0, 0);
     wrefresh(current_win.window);
 }
 
-string user_get(WIN & current_win, int & line, const string prompt)
+string user_get(WIN & current_win, const string prompt)
 {
     char input[1000];
     wclear(current_win.window);
     box(current_win.window, 0, 0);
 
-    mvwprintw(current_win.window, line++, 2, "%s", prompt.c_str());
+    mvwprintw(current_win.window, current_win.current_line++, 2, "%s", prompt.c_str());
     wrefresh(current_win.window);
 
-    wmove(current_win.window, line, 2);
+    wmove(current_win.window, current_win.current_line++, 2);
     refresh();
     wrefresh(current_win.window);
     echo();
     wgetstr(current_win.window, input);
-    line++;
-    mvwprintw(current_win.window, line++, 2, "%s %s", "You entered: ", input);
+    mvwprintw(current_win.window, current_win.current_line++, 2, "%s %s", "You entered: ", input);
     noecho();
     return string(input);
 }
 
 WIN::WIN()
 {
-    x = y = width = height = 0;
+    x = y = width = height = current_line = 0;
 }
 
