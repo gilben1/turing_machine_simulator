@@ -110,15 +110,13 @@ int main()
             case 1:
                 {
                     load_machine(tm, disp_win);
-                    vector<string> output = tm.display_states();
-                    print_string_vector(disp_win, output);
+                    display_states(tm, disp_win);
                     choice = 0;
                     break;
                 }
             case 2:
                 {
-                    vector<string> output = tm.display_states();
-                    print_string_vector(disp_win, output);
+                    display_states(tm, disp_win);
                     choice = 0;
                     break;
                 }

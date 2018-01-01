@@ -23,10 +23,12 @@ struct WIN
     int height;
 };
 void load_machine(turing_machine & tm, WIN & current_win);
+void display_states(turing_machine & tm, WIN & current_win);
 void build_tape(turing_machine & tm);
 void select_start(turing_machine & tm);
 
 void print_menu(WIN & menu_win, int highlight, vector<string> & choices);
 void print_string_vector(WIN & current_win, vector<string> & output);
+void print_string(WIN & current_win, string & output);
 
 string user_get(WIN & current_win, int & line, const string prompt);
