@@ -20,8 +20,23 @@ void load_machine(turing_machine & tm, WIN & current_win)
 
     string input = user_get(current_win, line, "Enter the name of the file you'd like to load");
 
-    tm.read_from_file(input);
+    string output = tm.read_from_file(input);
+    if (output != "")
+    {
+        print_string(current_win, output);
+    }
 }
+
+/*
+ * Displays the states of the passed turing machine into the current window
+ */
+void display_states(turing_machine & tm, WIN & current_win)
+{
+    vector<string> output = tm.display_states();
+    if (!output.empty())
+        print_string_vector(current_win, output);
+}
+
 
 /*
  * Builds the tape in the machine based on user input
@@ -107,6 +122,19 @@ void print_string_vector(WIN & current_win, vector<string> & output)
         mvwprintw(current_win.window, y, x, "%s", output[i].c_str());
         ++y;
     }
+    box(current_win.window, 0, 0);
+    wrefresh(current_win.window);
+}
+
+void print_string(WIN & current_win, string & output)
+{
+    int x = 2;
+    int y = 2;
+
+    wclear(current_win.window);
+    box(current_win.window, 0, 0);
+
+    mvwprintw(current_win.window, y, x, "%s", output.c_str());
     box(current_win.window, 0, 0);
     wrefresh(current_win.window);
 }
