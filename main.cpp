@@ -122,14 +122,14 @@ int main()
                 }
             case 3:
                 {
-                    build_tape(tm);
-                    tm.display_tape();
+                    build_tape(tm, disp_win);
+                    display_tape(tm, disp_win);
                     choice = 0;
                     break;
                 }
             case 4:
                 {
-                    tm.display_tape();
+                    display_tape(tm, disp_win);
                     choice = 0;
                     break;
                 }

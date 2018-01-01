@@ -142,7 +142,7 @@ int turing_machine::process_tape()
     while (true)
     {
         inst * i = current_state.process(read());
-        display_tape();
+        //display_tape();
         if (!i)
             return 0;
         else

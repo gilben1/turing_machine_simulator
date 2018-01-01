@@ -119,12 +119,14 @@ char tape::read()
  * Example output: _ 0 1 0 1 _
  *                   ^
  */
-void tape::display_tape()
+vector<string> tape::display_tape()
 {
+    vector<string> ret;
     if (!tapehead)
     {
-        cout << "Tape is empty!\n";
-        return;
+        //cout << "Tape is empty!\n";
+        ret.push_back("Tape is empty!");
+        return ret;
     }
     node * current = tapehead;
     while (current->left)
@@ -133,9 +135,12 @@ void tape::display_tape()
     string shift = "";
     bool stop = false;
 
+    stringstream sstm; 
+
     while (current)
     {
-        cout << current->content << " ";
+        //cout << current->content << " ";
+        sstm << current->content << " ";
         if (!stop && current == tapehead)
             stop = true;
         if (!stop)
@@ -143,7 +148,12 @@ void tape::display_tape()
 
         current = current->right;
     }
-    cout << "\n" <<  shift << "^\n";
+    ret.push_back(sstm.str());
+    sstm.str("");
+    sstm << shift << "^";
+    ret.push_back(sstm.str());
+    //cout << "\n" <<  shift << "^\n";
+    return ret;
 }
 
 /*

@@ -38,16 +38,26 @@ void display_states(turing_machine & tm, WIN & current_win)
         print_string_vector(current_win, output);
 }
 
+void display_tape(turing_machine & tm, WIN & current_win)
+{
+    vector<string> output = tm.display_tape();
+    if (!output.empty())
+        print_string_vector(current_win, output);
+}
 
 /*
  * Builds the tape in the machine based on user input
  */
-void build_tape(turing_machine & tm)
+void build_tape(turing_machine & tm, WIN & current_win)
 {
-    cout << "Enter the string you'd like to process:\n";
-    char input[1000];
-    cin.get(input, 1000, '\n');
-    cin.ignore(1000, '\n');
+    current_win.current_line = 2;
+
+    string input = user_get(current_win, "Enter the string you'd like to parse");
+
+    //cout << "Enter the string you'd like to process:\n";
+    //char input[1000];
+    //cin.get(input, 1000, '\n');
+    //cin.ignore(1000, '\n');
 
     tm.build_tape(input);
 }

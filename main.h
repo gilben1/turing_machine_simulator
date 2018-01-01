@@ -25,7 +25,8 @@ struct WIN
 };
 void load_machine(turing_machine & tm, WIN & current_win);
 void display_states(turing_machine & tm, WIN & current_win);
-void build_tape(turing_machine & tm);
+void display_tape(turing_machine & tm, WIN & current_win);
+void build_tape(turing_machine & tm, WIN & current_win);
 void select_start(turing_machine & tm);
 
 void print_menu(WIN & menu_win, int highlight, vector<string> & choices);

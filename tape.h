@@ -38,7 +38,7 @@ class tape
         void move_right();
         void write(char set);
         char read();
-        void display_tape();
+        vector<string> display_tape();
         void start_pos(bool left, bool blank);
         void start_pos(); // Using class members rather than passed values
 
