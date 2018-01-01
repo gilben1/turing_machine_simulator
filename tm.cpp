@@ -33,8 +33,9 @@ void turing_machine::add_state(state & src)
  * Lines beginning with #; (0;, 1;, n;) are interpreted as states
  * Lines beginning with L or R are interpreted as the start position for the tapehead
  */
-void turing_machine::read_from_file(string filename)
+string turing_machine::read_from_file(string filename)
 {
+    string ret = "";
     states.clear();
     desc.clear();
     ifstream fin;
@@ -84,8 +85,12 @@ void turing_machine::read_from_file(string filename)
         current_state = states[0];
     }
     else
-        cout << "Invalid file!\n";
+    {
+        //cout << "Invalid file!\n";
+        ret = "Invalid file!";
+    }
     fin.close();
+    return ret;
 }
 
 /*

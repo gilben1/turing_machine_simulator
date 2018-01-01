@@ -17,7 +17,7 @@ class turing_machine : public tape
         turing_machine();
         ~turing_machine();
         void add_state(state & src);
-        void read_from_file(string filename);
+        string read_from_file(string filename);
         vector<string> display_states();
         void build_tape(const string input);
         int process_tape();
