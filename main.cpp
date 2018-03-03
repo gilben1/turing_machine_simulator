@@ -72,7 +72,7 @@ int main()
 
     while (choice != 7)
     {
-        print_menu(menu_win, highlight, choices);
+        /*print_menu(menu_win, highlight, choices);
         while (choice != 7)
         {
             c = wgetch(menu_win.window);
@@ -101,7 +101,8 @@ int main()
             print_menu(menu_win, highlight, choices);
             if (choice != 0)
                 break;
-        }
+        }*/
+        prompt_menu(menu_win, highlight, choices, choice, c);
 
         //mvprintw(menuy + HEIGHT, 0, "You chose choice %d with choice string %s\n", choice, choices[choice - 1].c_str());
 
@@ -135,7 +136,7 @@ int main()
                 }
             case 5:
                 {
-                    select_start(tm);
+                    select_start(tm, menu_win);
                     tm.display_tape();
                     choice = 0;
                     break;

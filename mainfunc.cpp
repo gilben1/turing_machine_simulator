@@ -65,17 +65,29 @@ void build_tape(turing_machine & tm, WIN & current_win)
 /*
  * Menu for selecting the start position of the tapehead
  */
-void select_start(turing_machine & tm)
+void select_start(turing_machine & tm, WIN & current_win)
 {
     int resp = 0;
+    /*
     cout << "Select the start position for the tapehead:\n";
     cout << "\t1 - Blank on LHS\n";
     cout << "\t2 - First character of LHS\n";
     cout << "\t3 - Blank on RHS\n";
     cout << "\t4 - First character on RHS\n";
-
+    */
     cin >> resp;
     cin.ignore();
+
+    current_win.current_line = 2;
+
+    string prompt = "Select the start position of the tapehead:\n";
+    prompt += "\t1 - Blank on LHS\n";
+    prompt += "\t2 - First character of LHS\n";
+    prompt += "\t3 - Blank on RHS\n";
+    prompt += "\t4 - First character of RHS\n";
+    //string input = user_get(current_win, "
+
+
     switch(resp)
     {
         case 1:
@@ -92,6 +104,39 @@ void select_start(turing_machine & tm)
             break;
         default:
             cout << "No start position selected\n";
+            break;
+    }
+}
+void prompt_menu(WIN & menu_win, int highlight, vector<string> & choices, int & choice, int & c)
+{
+    print_menu(menu_win, highlight, choices);
+    while (choice != 7)
+    {
+        c = wgetch(menu_win.window);
+        switch(c)
+        {
+            case KEY_UP:
+                if (highlight == 1)
+                    highlight == choices.size();
+                else
+                    --highlight;
+                break;
+            case KEY_DOWN:
+                if (highlight == choices.size())
+                    highlight = 1;
+                else
+                    ++highlight;
+                break;
+            case 10:
+                choice = highlight;
+                break;
+            default:
+                mvprintw(24, 0, "Character pressed is = %3d Hopefully it can be printed as '%c'", c, c);
+                refresh();
+                break;
+        }
+        print_menu(menu_win, highlight, choices);
+        if (choice != 0)
             break;
     }
 }
