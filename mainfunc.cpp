@@ -67,28 +67,32 @@ void build_tape(turing_machine & tm, WIN & current_win)
  */
 void select_start(turing_machine & tm, WIN & current_win)
 {
+    refresh();
     int resp = 0;
-    /*
-    cout << "Select the start position for the tapehead:\n";
-    cout << "\t1 - Blank on LHS\n";
-    cout << "\t2 - First character of LHS\n";
-    cout << "\t3 - Blank on RHS\n";
-    cout << "\t4 - First character on RHS\n";
-    */
-    cin >> resp;
-    cin.ignore();
 
     current_win.current_line = 2;
 
-    string prompt = "Select the start position of the tapehead:\n";
-    prompt += "\t1 - Blank on LHS\n";
-    prompt += "\t2 - First character of LHS\n";
-    prompt += "\t3 - Blank on RHS\n";
-    prompt += "\t4 - First character of RHS\n";
-    //string input = user_get(current_win, "
+    wclear(current_win.window);
+    box(current_win.window, 0, 0);
 
+    mvwprintw(current_win.window, current_win.current_line++, 2, "%s", "Select the start position of the tapehead");
+    wrefresh(current_win.window);
 
-    switch(resp)
+    vector<string> choices;
+    //choices.push_back("Select the start position of the tapehead:\n");
+    choices.push_back( "\t1 - Blank on LHS");
+    choices.push_back( "\t2 - First character of LHS");
+    choices.push_back( "\t3 - Blank on RHS");
+    choices.push_back( "\t4 - First character of RHS");
+    choices.push_back( "\t5 - Cancel");
+
+    int highlight = 1;
+    int choice = 0;
+    int c;
+
+    prompt_menu(current_win, highlight, choices, choice, c, current_win.current_line);
+
+    switch(choice)
     {
         case 1:
             tm.start_pos(true, true);
@@ -103,13 +107,15 @@ void select_start(turing_machine & tm, WIN & current_win)
             tm.start_pos(false, false);
             break;
         default:
-            cout << "No start position selected\n";
             break;
     }
+    current_win.current_line = 2;
 }
-void prompt_menu(WIN & menu_win, int highlight, vector<string> & choices, int & choice, int & c)
+
+
+void prompt_menu(WIN & menu_win, int highlight, vector<string> & choices, int & choice, int & c, int offset)
 {
-    print_menu(menu_win, highlight, choices);
+    print_menu(menu_win, highlight, choices, offset);
     while (choice != 7)
     {
         c = wgetch(menu_win.window);
@@ -135,18 +141,18 @@ void prompt_menu(WIN & menu_win, int highlight, vector<string> & choices, int & 
                 refresh();
                 break;
         }
-        print_menu(menu_win, highlight, choices);
+        print_menu(menu_win, highlight, choices, offset);
         if (choice != 0)
             break;
     }
 }
 
-void print_menu(WIN & menu_win, int highlight, vector<string> & choices)
+void print_menu(WIN & menu_win, int highlight, vector<string> & choices, int offset)
 {
     int x, y, i;
 
     x = 2;
-    y = 2;
+    y = offset;
     box(menu_win.window, 0, 0);
     int size = choices.size();
     for(i = 0; i < size; ++i)

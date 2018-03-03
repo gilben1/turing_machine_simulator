@@ -72,37 +72,7 @@ int main()
 
     while (choice != 7)
     {
-        /*print_menu(menu_win, highlight, choices);
-        while (choice != 7)
-        {
-            c = wgetch(menu_win.window);
-            switch(c)
-            {
-                case KEY_UP:
-                    if (highlight == 1)
-                        highlight == choices.size();
-                    else
-                        --highlight;
-                    break;
-                case KEY_DOWN:
-                    if (highlight == choices.size())
-                        highlight = 1;
-                    else
-                        ++highlight;
-                    break;
-                case 10:
-                    choice = highlight;
-                    break;
-                default:
-                    mvprintw(24, 0, "Character pressed is = %3d Hopefully it can be printed as '%c'", c, c);
-                    refresh();
-                    break;
-            }
-            print_menu(menu_win, highlight, choices);
-            if (choice != 0)
-                break;
-        }*/
-        prompt_menu(menu_win, highlight, choices, choice, c);
+        prompt_menu(menu_win, highlight, choices, choice, c, 2);
 
         //mvprintw(menuy + HEIGHT, 0, "You chose choice %d with choice string %s\n", choice, choices[choice - 1].c_str());
 
@@ -137,7 +107,8 @@ int main()
             case 5:
                 {
                     select_start(tm, menu_win);
-                    tm.display_tape();
+                    //tm.display_tape();
+                    display_tape(tm, disp_win);
                     choice = 0;
                     break;
                 }
@@ -159,7 +130,7 @@ int main()
 
         clrtoeol();
         refresh();
-        c = wgetch(menu_win.window);
+        //c = wgetch(menu_win.window);
         wclear(menu_win.window);
     }
     endwin();

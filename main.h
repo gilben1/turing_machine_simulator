@@ -29,8 +29,8 @@ void display_tape(turing_machine & tm, WIN & current_win);
 void build_tape(turing_machine & tm, WIN & current_win);
 void select_start(turing_machine & tm, WIN & current_win);
 
-void prompt_menu(WIN & menu_win, int highlight, vector<string> & choices, int & choice, int & c);
-void print_menu(WIN & menu_win, int highlight, vector<string> & choices);
+void prompt_menu(WIN & menu_win, int highlight, vector<string> & choices, int & choice, int & c, int offset);
+void print_menu(WIN & menu_win, int highlight, vector<string> & choices, int offset);
 void print_string_vector(WIN & current_win, vector<string> & output);
 void print_string(WIN & current_win, string & output);
 
