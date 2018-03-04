@@ -33,8 +33,9 @@ void turing_machine::add_state(state & src)
  * Lines beginning with #; (0;, 1;, n;) are interpreted as states
  * Lines beginning with L or R are interpreted as the start position for the tapehead
  */
-void turing_machine::read_from_file(string filename)
+string turing_machine::read_from_file(string filename)
 {
+    string ret = "";
     states.clear();
     desc.clear();
     ifstream fin;
@@ -51,8 +52,7 @@ void turing_machine::read_from_file(string filename)
             if (handle[0] == '#') // Processing description
             {
                 handle.erase(0, 1);
-                desc += handle;
-                desc += "\n";
+                desc.push_back(handle);
                 getline(fin, handle);
             }
             else if (handle[1] != ';') // If we're processing the start pos
@@ -85,20 +85,32 @@ void turing_machine::read_from_file(string filename)
         current_state = states[0];
     }
     else
-        cout << "Invalid file!\n";
+    {
+        //cout << "Invalid file!\n";
+        ret = "Invalid file!";
+    }
     fin.close();
+    return ret;
 }
 
 /*
  * Display the states of the machine
  */
-void turing_machine::display_states()
+vector<string> turing_machine::display_states()
 {
-    cout << desc << "\n";
+    vector<string> ret;
+    for (int i = 0; i < desc.size(); ++i)
+        ret.push_back(desc[i]);
+
     for (int i = 0; i < states.size(); ++i)
     {
-        states[i].display();
+        vector<string> state_out = states[i].display();
+        for (int j = 0; j < state_out.size(); ++j)
+        {
+            ret.push_back(state_out[j]);
+        }
     }
+    return ret;
 }
 
 /*
@@ -125,12 +137,13 @@ void turing_machine::build_tape(const string input)
  * Returns 0 if it rejects
  * Returns 1 if it accepts
  */
-int turing_machine::process_tape()
+int turing_machine::process_tape(vector<string> & output)
 {
     while (true)
     {
         inst * i = current_state.process(read());
-        display_tape();
+        vector<string> result = display_tape();
+        output.insert(output.end(), result.begin(), result.end());
         if (!i)
             return 0;
         else

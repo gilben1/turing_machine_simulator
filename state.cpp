@@ -52,14 +52,24 @@ void state::add_transition(inst & src)
 /*
  * Displays the commands for the state
  */
-void state::display()
+vector<string> state::display()
 {
-    cout << "State " << id << "\n"; 
+    vector<string> ret;
+
+    stringstream sstm; // Acts sorta like an ostream (cout), and can be converted to string
+    sstm << "State " << id << "\n";
+
+    ret.push_back(sstm.str());
+
+    sstm.str(""); // Resets sstm to ""
     for (int i = 0; i < commands.size(); ++i)
     {
-        cout << "Instruction " << i << ": ";
-        commands[i].display();
+        sstm << "Insruction " << i << ": ";
+        ret.push_back(sstm.str());
+        sstm.str("");
+        ret.back() += commands[i].display();
     }
+    return ret;
 }
 
 /*
@@ -90,9 +100,11 @@ bool inst::compare(char comp)
 /*
  * Output current instruction
  */
-void inst::display()
+string inst::display()
 {
-    cout << condition << " -> " << set << ", " << dir << ": " << dest << "\n";
+    stringstream sstm;
+    sstm << condition << " -> " << set << ", " << dir << ": " << dest << "\n";
+    return sstm.str();
 }
 
 /*

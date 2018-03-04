@@ -17,12 +17,12 @@ class turing_machine : public tape
         turing_machine();
         ~turing_machine();
         void add_state(state & src);
-        void read_from_file(string filename);
-        void display_states();
+        string read_from_file(string filename);
+        vector<string> display_states();
         void build_tape(const string input);
-        int process_tape();
+        int process_tape(vector<string> & output);
     protected:
         vector<state> states;
         state current_state;
-        string desc;
+        vector<string> desc;
 };
