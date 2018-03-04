@@ -137,12 +137,13 @@ void turing_machine::build_tape(const string input)
  * Returns 0 if it rejects
  * Returns 1 if it accepts
  */
-int turing_machine::process_tape()
+int turing_machine::process_tape(vector<string> & output)
 {
     while (true)
     {
         inst * i = current_state.process(read());
-        //display_tape();
+        vector<string> result = display_tape();
+        output.insert(output.end(), result.begin(), result.end());
         if (!i)
             return 0;
         else

@@ -24,7 +24,7 @@ void load_machine(turing_machine & tm, WIN & current_win)
     string output = tm.read_from_file(input);
     if (output != "")
     {
-        print_string(current_win, output);
+        print_string(current_win, output, true);
     }
 }
 
@@ -112,6 +112,30 @@ void select_start(turing_machine & tm, WIN & current_win)
     current_win.current_line = 2;
 }
 
+void process_tape(turing_machine & tm, WIN & current_win)
+{
+    vector<string> output;
+    int result = tm.process_tape(output);
+    if (result)
+    {
+        output.push_back("Halt and accept");
+    }
+    else
+    {
+        output.push_back("Halt and reject");
+    }
+    for (int i = 0; i < output.size() - 1; i += 2)
+    {
+        current_win.current_line = 2;
+        print_string(current_win, output[i], true);
+        print_string(current_win, output[i+1], false);
+        std::this_thread::sleep_for (std::chrono::milliseconds(500));
+    }
+    print_string(current_win, output[output.size() - 1], false);
+
+
+    //print_string_vector(current_win, output);
+}
 
 void prompt_menu(WIN & menu_win, int highlight, vector<string> & choices, int & choice, int & c, int offset)
 {
@@ -188,12 +212,14 @@ void print_string_vector(WIN & current_win, vector<string> & output)
     wrefresh(current_win.window);
 }
 
-void print_string(WIN & current_win, string & output)
+void print_string(WIN & current_win, string & output, bool clear)
 {
     int x = 2;
-
-    wclear(current_win.window);
-    box(current_win.window, 0, 0);
+    if (clear)
+    {
+        wclear(current_win.window);
+        box(current_win.window, 0, 0);
+    }
 
     mvwprintw(current_win.window, current_win.current_line++, x, "%s", output.c_str());
     box(current_win.window, 0, 0);

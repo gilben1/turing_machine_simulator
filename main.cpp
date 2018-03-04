@@ -114,10 +114,7 @@ int main()
                 }
             case 6:
                 {
-                    if (tm.process_tape())
-                        cout << "Halt and accept\n";
-                    else
-                        cout << "Halt and reject\n";
+                    process_tape(tm, disp_win);
                     choice = 0;
                     break;
                 }
