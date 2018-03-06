@@ -126,9 +126,10 @@ int main()
         }
 
         clrtoeol();
-        refresh();
+        //refresh();
         //c = wgetch(menu_win.window);
-        wclear(menu_win.window);
+        //wclear(menu_win.window);
+        werase(menu_win.window);
     }
     endwin();
     /*

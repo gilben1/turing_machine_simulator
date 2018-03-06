@@ -67,12 +67,13 @@ void build_tape(turing_machine & tm, WIN & current_win)
  */
 void select_start(turing_machine & tm, WIN & current_win)
 {
-    refresh();
+    //refresh();
     int resp = 0;
 
     current_win.current_line = 2;
 
-    wclear(current_win.window);
+    //wclear(current_win.window);
+    werase(current_win.window);
     box(current_win.window, 0, 0);
 
     mvwprintw(current_win.window, current_win.current_line++, 2, "%s", "Select the start position of the tapehead");
@@ -198,7 +199,8 @@ void print_string_vector(WIN & current_win, vector<string> & output)
     int x = 2;
     int y = 2;
 
-    wclear(current_win.window);
+    //wclear(current_win.window);
+    werase(current_win.window);
     box(current_win.window, 0, 0);
 
     int size = output.size();
@@ -217,26 +219,29 @@ void print_string(WIN & current_win, string & output, bool clear)
     int x = 2;
     if (clear)
     {
-        wclear(current_win.window);
+        //wclear(current_win.window);
+        werase(current_win.window);
         box(current_win.window, 0, 0);
     }
 
     mvwprintw(current_win.window, current_win.current_line++, x, "%s", output.c_str());
-    box(current_win.window, 0, 0);
+    //box(current_win.window, 0, 0);
     wrefresh(current_win.window);
 }
 
 string user_get(WIN & current_win, const string prompt)
 {
     char input[1000];
-    wclear(current_win.window);
+
+    //wclear(current_win.window);
+    werase(current_win.window);
     box(current_win.window, 0, 0);
 
     mvwprintw(current_win.window, current_win.current_line++, 2, "%s", prompt.c_str());
     wrefresh(current_win.window);
 
     wmove(current_win.window, current_win.current_line++, 2);
-    refresh();
+    //refresh();
     wrefresh(current_win.window);
     echo();
     wgetstr(current_win.window, input);
