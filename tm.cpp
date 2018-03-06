@@ -11,6 +11,7 @@
  */
 #include "tm.h"
 #include <fstream>
+
 /*
  * TURING MACHINE
  */
@@ -32,6 +33,9 @@ void turing_machine::add_state(state & src)
  * Lines beginning with # are interpreted as parts of the machine description
  * Lines beginning with #; (0;, 1;, n;) are interpreted as states
  * Lines beginning with L or R are interpreted as the start position for the tapehead
+ * 
+ * string filename => file to open
+ * return => string message to be output
  */
 string turing_machine::read_from_file(string filename)
 {
@@ -86,7 +90,6 @@ string turing_machine::read_from_file(string filename)
     }
     else
     {
-        //cout << "Invalid file!\n";
         ret = "Invalid file!";
     }
     fin.close();
@@ -95,6 +98,8 @@ string turing_machine::read_from_file(string filename)
 
 /*
  * Display the states of the machine
+ * 
+ * return => vector of string for output
  */
 vector<string> turing_machine::display_states()
 {
@@ -115,6 +120,8 @@ vector<string> turing_machine::display_states()
 
 /*
  * Builds the tape from passed in input
+ * 
+ * const string input => string to build tape from
  */
 void turing_machine::build_tape(const string input)
 {
@@ -134,16 +141,21 @@ void turing_machine::build_tape(const string input)
  * Processes the tape bassed on the states in the states vector
  * Handles like an actual turing machine, making moves based on the contents of
  * the tapehead
- * Returns 0 if it rejects
- * Returns 1 if it accepts
+ * 
+ * vector<string> & output => vector of strings to add to as the output
+ * 
+ * return => 0 if it rejects
+ * return => if it accepts
  */
 int turing_machine::process_tape(vector<string> & output)
 {
     while (true)
     {
         inst * i = current_state.process(read());
+
         vector<string> result = display_tape();
         output.insert(output.end(), result.begin(), result.end());
+
         if (!i)
             return 0;
         else
@@ -152,12 +164,10 @@ int turing_machine::process_tape(vector<string> & output)
             if (i->get_dir() == 'R')
             {
                 move_right();
-                //cout << "R ";
             }
             else if (i->get_dir() == 'L')
             {
                 move_left();
-                //cout << "L ";
             }
             else
                 return 0;
