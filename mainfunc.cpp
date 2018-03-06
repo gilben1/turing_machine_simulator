@@ -13,10 +13,12 @@
 
 /*
  * Loads machine from file based on user input
+ * 
+ * turing_machine & tm => turing machine to use
+ * WIN & current_win => Window to display to
  */
 void load_machine(turing_machine & tm, WIN & current_win)
 {
-    //int line = 2;
     current_win.current_line = 2;
 
     string input = user_get(current_win, "Enter the name of the file you'd like to load");
@@ -30,6 +32,9 @@ void load_machine(turing_machine & tm, WIN & current_win)
 
 /*
  * Displays the states of the passed turing machine into the current window
+ * 
+ * turing_machine & tm => turing machine to use
+ * WIN & current_win => Window to display to
  */
 void display_states(turing_machine & tm, WIN & current_win)
 {
@@ -38,6 +43,12 @@ void display_states(turing_machine & tm, WIN & current_win)
         print_string_vector(current_win, output);
 }
 
+/*
+ * Displays the tape of the turing machine in the window
+ * 
+ * turing_machine & tm => turing machine to use
+ * WIN & current_win => Window to display to
+ */
 void display_tape(turing_machine & tm, WIN & current_win)
 {
     vector<string> output = tm.display_tape();
@@ -47,6 +58,9 @@ void display_tape(turing_machine & tm, WIN & current_win)
 
 /*
  * Builds the tape in the machine based on user input
+ * 
+ * turing_machine & tm => turing machine to use
+ * WIN & current_win => Window to display to
  */
 void build_tape(turing_machine & tm, WIN & current_win)
 {
@@ -54,32 +68,28 @@ void build_tape(turing_machine & tm, WIN & current_win)
 
     string input = user_get(current_win, "Enter the string you'd like to parse");
 
-    //cout << "Enter the string you'd like to process:\n";
-    //char input[1000];
-    //cin.get(input, 1000, '\n');
-    //cin.ignore(1000, '\n');
-
     tm.build_tape(input);
 }
 
 /*
  * Menu for selecting the start position of the tapehead
+ * 
+ * turing_machine & tm => turing machine to use
+ * WIN & current_win => Window to display to
  */
 void select_start(turing_machine & tm, WIN & current_win)
 {
-    refresh();
     int resp = 0;
 
     current_win.current_line = 2;
 
-    wclear(current_win.window);
+    werase(current_win.window);
     box(current_win.window, 0, 0);
 
     mvwprintw(current_win.window, current_win.current_line++, 2, "%s", "Select the start position of the tapehead");
     wrefresh(current_win.window);
 
     vector<string> choices;
-    //choices.push_back("Select the start position of the tapehead:\n");
     choices.push_back( "\t1 - Blank on LHS");
     choices.push_back( "\t2 - First character of LHS");
     choices.push_back( "\t3 - Blank on RHS");
@@ -112,6 +122,12 @@ void select_start(turing_machine & tm, WIN & current_win)
     current_win.current_line = 2;
 }
 
+/*
+ * Processes the tape and outputs as an animation in the display window
+ * 
+ * turing_machine & tm => turing machine to use
+ * WIN & current_win => window to print to
+ */
 void process_tape(turing_machine & tm, WIN & current_win)
 {
     vector<string> output;
@@ -132,11 +148,18 @@ void process_tape(turing_machine & tm, WIN & current_win)
         std::this_thread::sleep_for (std::chrono::milliseconds(500));
     }
     print_string(current_win, output[output.size() - 1], false);
-
-
-    //print_string_vector(current_win, output);
 }
 
+/*
+ * Display a menu in the menu window, taking in a vector of choices
+ * 
+ * WIN & menu_win => window to print to
+ * int highlight => the selected menu item
+ * vector<string> & choices => choices to print
+ * int & choice => the choice selected
+ * int & c => the inputted character
+ * int offset => the number of lines to offset the menu by
+ */
 void prompt_menu(WIN & menu_win, int highlight, vector<string> & choices, int & choice, int & c, int offset)
 {
     print_menu(menu_win, highlight, choices, offset);
@@ -171,6 +194,14 @@ void prompt_menu(WIN & menu_win, int highlight, vector<string> & choices, int & 
     }
 }
 
+/*
+ * Prints a menu where the highlighted item is inverted
+ * 
+ * WIN & menu_win => window to print to
+ * int highlight => Highlighted choice
+ * vectr<string> & choices => vector of choices to display
+ * int offset => offset to print menu you by in lines
+ */
 void print_menu(WIN & menu_win, int highlight, vector<string> & choices, int offset)
 {
     int x, y, i;
@@ -192,13 +223,18 @@ void print_menu(WIN & menu_win, int highlight, vector<string> & choices, int off
     wrefresh(menu_win.window);
 }
 
-
+/*
+ * Prints a passed in vector to the passed in window
+ * 
+ * WIN & current_win => window to print to
+ * vector<string> & output => output to print
+ */
 void print_string_vector(WIN & current_win, vector<string> & output)
 {
     int x = 2;
     int y = 2;
 
-    wclear(current_win.window);
+    werase(current_win.window);
     box(current_win.window, 0, 0);
 
     int size = output.size();
@@ -212,12 +248,19 @@ void print_string_vector(WIN & current_win, vector<string> & output)
     wrefresh(current_win.window);
 }
 
+/*
+ * Prints a single string to the current window at the current line
+ * 
+ * WIN & current_win => window to print to
+ * string & output => string to print
+ * bool clear => true to erase window, false to retain current window
+ */
 void print_string(WIN & current_win, string & output, bool clear)
 {
     int x = 2;
     if (clear)
     {
-        wclear(current_win.window);
+        werase(current_win.window);
         box(current_win.window, 0, 0);
     }
 
@@ -226,22 +269,32 @@ void print_string(WIN & current_win, string & output, bool clear)
     wrefresh(current_win.window);
 }
 
+/*
+ * Get input from the user, prompted from the passed in window
+ * 
+ * WIN & current_win => window to prompt and take imput in
+ * const string prompt => prompt to display
+ * 
+ * return => user input
+ */
 string user_get(WIN & current_win, const string prompt)
 {
     char input[1000];
-    wclear(current_win.window);
+
+    werase(current_win.window);
     box(current_win.window, 0, 0);
 
     mvwprintw(current_win.window, current_win.current_line++, 2, "%s", prompt.c_str());
     wrefresh(current_win.window);
 
     wmove(current_win.window, current_win.current_line++, 2);
-    refresh();
     wrefresh(current_win.window);
+
     echo();
     wgetstr(current_win.window, input);
     mvwprintw(current_win.window, current_win.current_line++, 2, "%s %s", "You entered: ", input);
     noecho();
+
     return string(input);
 }
 

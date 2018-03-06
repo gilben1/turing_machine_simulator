@@ -26,6 +26,9 @@ state::state(const state & src)
 
 /*
  * Processes the passed in character
+ * 
+ * char cur => character to process
+ * 
  * Returns the instruction based on the commands within the state
  * Returns NULL if no valid command found based on input
  */
@@ -43,6 +46,8 @@ inst * state::process(char cur)
 
 /*
  * Adds passed inst to the commands vector
+ * 
+ * inst & src => inst to add to the commands vector
  */
 void state::add_transition(inst & src)
 {
@@ -51,6 +56,8 @@ void state::add_transition(inst & src)
 
 /*
  * Displays the commands for the state
+ * 
+ * return => vector of strings to be outputted
  */
 vector<string> state::display()
 {
@@ -90,6 +97,9 @@ inst::inst(char co, char se, char di, int de):condition(co), set(se), dir(di), d
 
 /*
  * Compares to passed in character
+ * 
+ * char comp => character to compare to
+ * 
  * Return if the condition matches the passed in char
  */
 bool inst::compare(char comp)
@@ -99,6 +109,8 @@ bool inst::compare(char comp)
 
 /*
  * Output current instruction
+ * 
+ * return => the string to be outputted
  */
 string inst::display()
 {

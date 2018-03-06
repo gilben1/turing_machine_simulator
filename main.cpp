@@ -27,17 +27,6 @@ int main()
     choices.push_back("Process the input");
     choices.push_back("Exit");
 
-    /*WINDOW *menu_win;
-    int menux = 0;
-    int menuy = 0;
-    int menuwidth = 0;
-    int menuheight = 0;
-
-    WINDOW *disp_win;
-    int dispx = 0;
-    int dispy = 0;
-    int dispwidth = 0;
-    int dispheight = 0;*/
     WIN menu_win;
     WIN disp_win;
 
@@ -73,8 +62,6 @@ int main()
     while (choice != 7)
     {
         prompt_menu(menu_win, highlight, choices, choice, c, 2);
-
-        //mvprintw(menuy + HEIGHT, 0, "You chose choice %d with choice string %s\n", choice, choices[choice - 1].c_str());
 
         switch(choice)
         {
@@ -126,58 +113,8 @@ int main()
         }
 
         clrtoeol();
-        refresh();
-        //c = wgetch(menu_win.window);
-        wclear(menu_win.window);
+        werase(menu_win.window);
     }
     endwin();
-    /*
-       cout << "Welcome to the near useless turing machine simulator!\n";
-       int resp = 0;
-    // Menu loop
-    do
-    {
-    cout << "Please select what you would like to do:\n";
-    cout << "\t1 - Load a machine from file\n";
-    cout << "\t2 - Display the states of the machine\n";
-    cout << "\t3 - Build the infinite tape\n";
-    cout << "\t4 - Display the current tape\n";
-    cout << "\t5 - Select the start position of the tapehead\n";
-    cout << "\t6 - Process the input\n";
-    cout << "\tOr, any other input to exit the program\n";
-    cin >> resp;
-    cin.ignore();
-    switch(resp)
-    {
-    case 1:
-    load_machine(tm);
-    tm.display_states();
-    break;
-    case 2:
-    tm.display_states();
-    break;
-    case 3:
-    build_tape(tm);
-    tm.display_tape();
-    break;
-    case 4:
-    tm.display_tape();
-    break;
-    case 5:
-    select_start(tm);
-    tm.display_tape();
-    break;
-    case 6:
-    if (tm.process_tape())
-    cout << "Halt and accept\n";
-    else
-    cout << "Halt and reject\n";
-    break;
-    default:
-    cout << "See ya\n";
-    break;
-    }
-    }
-    while (resp > 0 && resp < 7);*/
     return 1;
 }

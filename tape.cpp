@@ -10,6 +10,7 @@
  * shown in steps to simulate the position of the tapehead as it processes input
  */
 #include "tape.h"
+
 /*
  * NODE
  */
@@ -118,13 +119,14 @@ char tape::read()
  * Display the entire tape, including the position of the tapehead
  * Example output: _ 0 1 0 1 _
  *                   ^
+ * 
+ * return => vector of strings to output
  */
 vector<string> tape::display_tape()
 {
     vector<string> ret;
     if (!tapehead)
     {
-        //cout << "Tape is empty!\n";
         ret.push_back("Tape is empty!");
         return ret;
     }
@@ -139,7 +141,6 @@ vector<string> tape::display_tape()
 
     while (current)
     {
-        //cout << current->content << " ";
         sstm << current->content << " ";
         if (!stop && current == tapehead)
             stop = true;
@@ -152,14 +153,13 @@ vector<string> tape::display_tape()
     sstm.str("");
     sstm << shift << "^";
     ret.push_back(sstm.str());
-    //cout << "\n" <<  shift << "^\n";
     return ret;
 }
 
 /*
  * Sets the start position of the tapehead
- * Left indicates whether or not to start on the lefthand side of the tape
- * Blank indicates whether or not to start on the blank left of the first character
+ * bool left => indicates whether or not to start on the lefthand side of the tape
+ * bool blank => indicates whether or not to start on the blank left of the first character
  */
 void tape::start_pos(bool left, bool blank)
 {
